@@ -14,7 +14,7 @@ apply {
     plugin("kotlin")
 }
 
-val baseVersion = "2024.3"
+val baseVersion = "2024.2"
 
 intellij {
     version.set(baseVersion)
@@ -22,6 +22,11 @@ intellij {
 }
 
 tasks {
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
@@ -33,10 +38,5 @@ tasks {
     val patchPluginXml by named<PatchPluginXmlTask>("patchPluginXml") {
         sinceBuild.set("233")
         untilBuild.set("")
-
-        changeNotes.set(
-            """    
-                """.trimIndent()
-        )
     }
 }

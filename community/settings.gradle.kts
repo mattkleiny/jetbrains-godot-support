@@ -1,4 +1,4 @@
-rootProject.name = "rider-godot-community"
+rootProject.name = "godot-community"
 
 pluginManagement {
     repositories {
