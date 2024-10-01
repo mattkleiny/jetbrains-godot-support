@@ -1,0 +1,77 @@
+<idea-plugin url="https://github.com/JetBrains/godot-support">
+  <id>com.intellij.rider.godot</id>
+  <name>Godot Support</name>
+  <vendor>JetBrains</vendor>
+
+  <incompatible-with>gdscript</incompatible-with>
+
+  <depends>com.intellij.modules.ultimate</depends>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <configurationType implementation="com.jetbrains.rider.plugins.godot.run.configurations.GodotDebugRunConfigurationType" />
+    <runConfigurationProducer implementation="com.jetbrains.rider.plugins.godot.run.configurations.DebugSceneRunConfigurationProducer" />
+    <runConfigurationProducer implementation="com.jetbrains.rider.plugins.godot.run.configurations.DebugSceneRunConfigurationProducerCor" />
+
+    <dependencySupport kind="dotnet" coordinate="GodotSharp" displayName="Godot"/>
+    <liveTemplateContext contextId="GDSCRIPT" implementation="com.jetbrains.rider.plugins.godot.textMate.GdScriptTemplateContextType" order="first" />
+    <defaultLiveTemplates file="templates/GdScript.xml" />
+
+    <postStartupActivity implementation="com.jetbrains.rider.plugins.godot.MetadataMonoFileWatcher"/>
+    <postStartupActivity implementation="com.jetbrains.rider.plugins.godot.MetadataCoreFileWatcher"/>
+
+    <!-- Options pages -->
+    <applicationConfigurable groupId="language"
+                             id="preferences.build.godotPlugin"
+                             instance="com.jetbrains.rider.plugins.godot.settings.GodotPluginOptionsPage"
+                             displayName="Godot Engine"/>
+    <projectConfigurable parentId="FileTemplatesSettingsId" instance="com.jetbrains.rider.plugins.godot.settings.templates.GodotFileTemplatesOptionPage" groupWeight="-120" />
+    <projectConfigurable parentId="LiveTemplatesSettingsId" instance="com.jetbrains.rider.plugins.godot.settings.templates.GodotLiveTemplatesOptionPage" groupWeight="-120" />
+
+    <platform.lsp.serverSupportProvider
+      implementation="com.jetbrains.rider.plugins.godot.lang.service.GodotLspServerSupportProvider"/>
+    <fileIndentOptionsProvider
+      implementation="com.jetbrains.rider.plugins.godot.textMate.GdScriptFileIndentOptionsProvider"
+      id="GdScriptFileIndentOptionsProvider"/>
+
+    <fileEditorProvider implementation="com.jetbrains.rider.plugins.godot.ui.GdScriptEditorWithPromotion" id="GDSCRIPT_WITH_PROMO_EDITOR_TYPE_ID" />
+    <configurationType implementation="com.jetbrains.rider.plugins.godot.run.configurations.gdscript.GdScriptConfigurationType"/>
+    <xdebugger.breakpointType implementation="com.jetbrains.rider.plugins.godot.run.configurations.gdscript.breakpoints.GdScriptLineBreakpointType"/>
+    <xdebugger.breakpointType implementation="com.jetbrains.rider.plugins.godot.run.configurations.gdscript.breakpoints.GdScriptExceptionBreakpointType"/>
+
+    <fileType name="GDScript"
+              implementationClass="com.jetbrains.rider.plugins.godot.GdScriptFileType"
+              extensions="gd"/>
+  </extensions>
+
+  <description>
+    <![CDATA[
+<p>Adds support for the Godot engine.</p>
+<p>
+<strong>Features</strong>
+<ul>
+  <li>Supports Godot versions 3.x and 4.x with a design ready for future updates.</li>
+  <li>Bundles syntax highlighting for Godot file types, including GDScript, scenes, resources and shaders.</li>
+  <li>Integration with Language server protocol, which is provided by Godot.</li>
+  <li>Autogenerates multiple run configurations:
+  <ul>
+    <li>Player to Run/Debug or Profile game in one click.</li>
+    <li>Editor to Run/Debug or Profile Godot Editor in one click.</li>
+    <li>Context menu on a scene file allows running game directly to that scene.</li>
+  </ul></li>
+  <li>Supports Input Action and NodePath completion in string literals <a href="https://github.com/JetBrains/godot-support/pull/102">More</a>.</li>
+</ul>
+</p>
+<p>
+<strong>Links</strong>
+<ul>
+  <li><a href="https://github.com/JetBrains/godot-support">GitHub</a></li>
+  <li><a href="https://github.com/JetBrains/godot-support/issues">Issues</a></li>
+</ul>
+</p>
+]]>
+  </description>
+
+  <resource-bundle>messages.GodotPluginBundle</resource-bundle>
+</idea-plugin>
